@@ -1,0 +1,5 @@
+
+*.log
+config.json
+/backend/__pycache__
+/backend/database/__pycache__

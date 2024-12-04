@@ -1,0 +1,9 @@
+{
+  "app_port": 8080,
+  "database_host": "127.0.0.1",
+  "database_user": "postgres",
+  "database_password": "123456789",
+  "database_name": "fanbase",
+  "database_port": "5432",
+  "debug_mode": false
+}

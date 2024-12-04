@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>fanbase</title>
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
+    </head>
+
+    <body>
+        
+        <div class="container">
+            <form action="/{{person_id}}/create_quotes" method="post">
+                <input type="text" name="quotes" placeholder="цитата" required>
+                <input type="submit" value="Создать" class="submit-button">
+            </form>
+            
+        </div>
+    
+    </body>
+
+</html>
