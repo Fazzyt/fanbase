@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <title>fanbase</title>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fanbase - Создание цитаты</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/create_style.css') }}">
+</head>
 
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
-    </head>
-
-    <body>
-        
-        <div class="container">
-            <form action="/{{person_id}}/create_quotes" method="post">
-                <input type="text" name="quotes" placeholder="цитата" required>
-                <input type="submit" value="Создать" class="submit-button">
-            </form>
-            
-        </div>
-    
-    </body>
+<body>
+    <div class="container">
+        <h2>Создание цитаты</h2>
+        <form action="/{{person_id}}/create_quotes" method="post">
+            <div class="form-group">
+                <label for="quotes">Цитата:</label>
+                <input type="text" name="quotes" id="quotes" class="form-control" placeholder="Введите цитату" required>
+            </div>
+            <input type="submit" value="Создать" class="btn btn-primary">
+        </form>
+    </div>
+</body>
 
 </html>

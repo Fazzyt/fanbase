@@ -1,0 +1,49 @@
+
+:root {
+    --background-color: #121212 ;
+    --deep-background-color: #101010;
+    --text-color: #ffffff ;
+    --accent-color: #D76F30;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.person_card {
+    background-color: var(--deep-background-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 15px;
+    margin: 10px;
+    padding: 15px;
+    transition: all 0.4s ease-in-out;
+    z-index: 1;
+}
+
+.person_card h3 {
+    color: var(--text-color);
+    font-size: 24px;
+}
+
+.person_card a {
+    color: var(--accent-color);
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.quotes_card {
+    background-color: var(--deep-background-color);
+    background-color: var(--deep-background-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    transition: all 0.4s ease-in-out;
+    z-index: 1;
+}
+
+.quotes_card p {
+    color: var(--text-color);
+    font-size: 22px;
+}

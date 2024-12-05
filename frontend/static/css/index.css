@@ -1,0 +1,52 @@
+
+:root {
+    --background-color: #121212 ;
+    --deep-background-color: #101010;
+    --text-color: #ffffff ;
+    --accent-color: #D76F30;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.navbar-brand {
+    color: var(--text-color);
+}
+
+.navbar-text a {
+    color: var(--text-color);
+    font-size: 18px;
+    text-decoration: none;
+}
+
+.navbar-text a:hover {
+    color: var(--accent-color);
+}
+
+.card {
+    background-color: var(--deep-background-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 15px;
+    margin: 10px;
+    padding: 15px;
+    transition: all 0.4s ease-in-out;
+    z-index: 1;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 50px var(--accent-color);
+}
+
+.card h3 {
+    color: var(--text-color);
+    font-size: 24px;
+}
+
+.card a {
+    color: var(--accent-color);
+    font-size: 18px;
+    text-decoration: none;
+}

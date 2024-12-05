@@ -8,20 +8,36 @@
         <title>fanbase</title>
 
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/index.css') }}">
     </head>
 
     <body>
+
+        <nav class="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                    Fanbase
+                </a>
+                <div class="navbar-text">
+                    <a href="/create_person">Сделать цитируемого</a>
+                </div>
+            </div>
+            
+        </nav>
         
         <div class="container">
-            <h1>fanbase</h1>
-            {% for person in person_list %} 
-                <div>
-                    <h3>{{ person.full_name|e }}</h3>
-                    <a href="/{{person.full_name}}">посмотреть все цитаты</a>
-                </div>
-            {% endfor %}
-        </div>
-    
+            <div class="row">
+                {% for person in person_list %} 
+                    <div class="col-md-8">
+                        <div class="card">
+                            <h3>{{ person.full_name|e }}</h3>
+                            <a href="/{{person.full_name}}">посмотреть все цитаты</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>  
+        </div>   
     </body>
 
 </html>

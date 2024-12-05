@@ -1,0 +1,36 @@
+:root {
+    --background-color: #121212;
+    --deep-background-color: #101010;
+    --text-color: #ffffff;
+    --accent-color: #D76F30;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    margin-top: 50px;
+}
+
+h2 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    margin: 10px;
+    color: var(--text-color);
+}
+
+.btn-primary {
+    margin: 10px;
+    background-color: var(--accent-color);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #D76F30;
+    opacity: 0.9;
+}
