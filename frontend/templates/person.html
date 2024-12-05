@@ -8,25 +8,33 @@
         <title>fanbase</title>
 
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/icons.css') }}">
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/person.css') }}">
     </head>
 
     <body>
-        
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="person_card">
-                        <h3>{{ person.full_name|e }}</h3>
-                        <a href="/{{person.id}}/create_quotes">написать цитату</a>
-                    </div>   
+        <nav class="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                    Fanbase
+                </a>
+                <div class="navbar-text">
+                    <a href="/{{person.id}}/create_quotes">Сделать цитату</a>
                 </div>
             </div>
+        </nav>
+
+        <div class="container">
             <div class="row">
                 {% for quote in quotes %}
                     <div class="col-md-8">
                         <div class="quotes_card">
-                            <p>{{ quote.quote|e }}</p>
+                            <h2>{{ quote.quote|e }}</h2>
+                            <p>
+                                <i class="bi bi-person-circle"></i>
+                                {{ person.full_name }}
+                            </p>
                         </div>
                     </div>
                 {% endfor %}

@@ -11,25 +11,18 @@ body {
     color: var(--text-color);
 }
 
-.person_card {
-    background-color: var(--deep-background-color);
-    border: 1px solid var(--accent-color);
-    border-radius: 15px;
-    margin: 10px;
-    padding: 15px;
-    transition: all 0.4s ease-in-out;
-    z-index: 1;
-}
-
-.person_card h3 {
+.navbar-brand {
     color: var(--text-color);
-    font-size: 24px;
 }
 
-.person_card a {
-    color: var(--accent-color);
+.navbar-text a {
+    color: var(--text-color);
     font-size: 18px;
     text-decoration: none;
+}
+
+.navbar-text a:hover {
+    color: var(--accent-color);
 }
 
 .quotes_card {
@@ -43,7 +36,18 @@ body {
     z-index: 1;
 }
 
-.quotes_card p {
+.quotes_card h2 {
     color: var(--text-color);
     font-size: 22px;
+}
+
+.quotes_card p {
+    color: var(--text-color);
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.quotes_card img {
+    width: 30px;
+    height: 30px;
 }
