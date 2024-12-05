@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fanbase - Админка</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <form action="" method="post">
+
+            <label for="person_id">Айди персоны:</label>
+            <input type="text" name="person_id" id="person_id" placeholder="Айди персоны" required>
+            <label for="person_id">Новое имя:</label>
+            <input type="text" name="new_name" id="new_name" placeholder="Новое имя" required>
+
+            <input type="submit" value="Изменить" class="btn btn-primary">
+        </form>
+        <form action="" method="post">
+
+            <label for="delete_person_id">Айди персоны для удаление:</label>
+            <input type="text" name="delete_person_id" id="delete_person_id" placeholder="Айди персоны для удаление" required>
+
+            <input type="submit" value="Удалить" class="btn btn-danger">
+        </form>
+    </div>
+</body>
+
+</html>

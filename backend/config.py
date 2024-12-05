@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 @dataclass
 class Config:
     app_port: int
+    admin_password: str
 
     database_host: str
     database_user: str

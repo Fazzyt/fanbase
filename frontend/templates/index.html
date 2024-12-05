@@ -8,6 +8,7 @@
         <title>fanbase</title>
 
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/icons.css') }}">
         <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/index.css') }}">
     </head>
 
@@ -16,7 +17,7 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <img src="" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                    <i class="bi bi-bookmark-star-fill"></i>
                     Fanbase
                 </a>
                 <div class="navbar-text">
@@ -33,6 +34,7 @@
                         <div class="card">
                             <h3>{{ person.full_name|e }}</h3>
                             <a href="/{{person.full_name}}">посмотреть все цитаты</a>
+                            <p class="text-end"><b>{{ person.id }}</b></p>
                         </div>
                     </div>
                 {% endfor %}

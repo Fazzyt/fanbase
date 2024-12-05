@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import hashlib
 
 from quart import Quart, render_template, request, redirect
 
@@ -53,6 +54,25 @@ async def create_quotes_page(person_id):
     
     return await render_template("create_quotes.html",person_id=person_id)
 
+@app.route("/admin/<password>", methods=["get", "post"])
+async def admin_page(password):
+    if hashlib.sha3_512(password.encode()).hexdigest() != config.admin_password:
+        return redirect("/")
+    
+    if request.method == "POST":
+        form = await request.form
+        person_id = form.get("person_id")
+        new_name = form.get("new_name")
+
+        delete_person_id = form.get("delete_person_id")
+
+        if person_id and new_name:
+            await Person_operation.update_person(int(person_id), new_name)
+        if delete_person_id:
+            await Person_operation.delete_person(int(delete_person_id))
+
+    return await render_template("admin.html", )
+        
 
 @app.before_serving
 async def startup():
