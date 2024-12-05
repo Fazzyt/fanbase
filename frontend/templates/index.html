@@ -16,7 +16,7 @@
             <h1>fanbase</h1>
             {% for person in person_list %} 
                 <div>
-                    <h3>{{person.full_name}}</h3>
+                    <h3>{{ person.full_name|e }}</h3>
                     <a href="/{{person.full_name}}">посмотреть все цитаты</a>
                 </div>
             {% endfor %}

@@ -14,11 +14,11 @@
         
         <div class="container">
             <h1>fanbase</h1>
-            {{person.full_name}}
+            {{ person.full_name|e }}
             <a href="/{{person.id}}/create_quotes">написать цитату</a>
 
             {% for quote in quotes %}
-                <p>{{quote.quote}}</p>
+                <p>{{ quote.quote|e }}</p>
             {% endfor %}
         </div>
     

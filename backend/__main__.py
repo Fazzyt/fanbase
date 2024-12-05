@@ -20,6 +20,7 @@ async def main_page():
     person_list = await Person_operation.get_all_person()
     return await render_template("index.html", person_list=person_list)
 
+
 @app.route("/create_person", methods=["get", "post"])
 async def create_person_page():
     if request.method == "POST":
@@ -30,6 +31,7 @@ async def create_person_page():
     
     return await render_template("create_person.html")
 
+
 @app.route("/<full_name>", methods=["get"])
 async def person_page(full_name):
     person = await Person_operation.get_person_by_name(full_name=full_name)
@@ -39,6 +41,7 @@ async def person_page(full_name):
     
     quotes = await Quotes_operation.get_all_quote_by_person(person_id=person.id)
     return await render_template("person.html", person=person, quotes=quotes)
+
 
 @app.route("/<person_id>/create_quotes", methods=["get", "post"])
 async def create_quotes_page(person_id):
