@@ -33,8 +33,10 @@
                     <div class="col-md-8">
                         <div class="card">
                             <h3>{{ person.full_name|e }}</h3>
-                            <a href="/{{person.full_name}}">посмотреть все цитаты</a>
-                            <p class="text-end"><b>{{ person.id }}</b></p>
+                            <a href="/{{person.full_name}}">
+                                посмотреть все цитаты
+                            </a>
+                            <p class="text-start"><b>Количество цитат: {{ person.quote_count }}</b></p>
                         </div>
                     </div>
                 {% endfor %}

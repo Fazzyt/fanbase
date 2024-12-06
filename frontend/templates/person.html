@@ -17,7 +17,7 @@
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
                     <i class="bi bi-bookmark-star-fill"></i>
-                    Fanbase
+                    Fanbase {{ person.full_name }} | {{ person.id }}
                 </a>
                 <div class="navbar-text">
                     <a href="/{{person.id}}/create_quotes">Сделать цитату</a>
@@ -31,10 +31,16 @@
                     <div class="col-md-8">
                         <div class="quotes_card">
                             <h2>{{ quote.quote|e }}</h2>
-                            <p>
-                                <i class="bi bi-person-circle"></i>
-                                {{ person.full_name }}
-                            </p>
+                            <div class="about_info">
+                                <p>
+                                    <i class="bi bi-person-circle"></i>
+                                    {{ person.full_name }}
+                                </p>
+                                <p>
+                                    <i class="bi bi-star-fill"></i>
+                                    id: {{ quote.id }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 {% endfor %}

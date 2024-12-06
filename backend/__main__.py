@@ -19,8 +19,9 @@ logger = logging.getLogger(__name__)
 @app.route("/", methods=["get"])
 async def main_page():
     person_list = await Person_operation.get_all_person()
+    for person in person_list:
+        person.quote_count = await Quotes_operation.get_quote_count_by_person(person.id)
     return await render_template("index.html", person_list=person_list)
-
 
 @app.route("/create_person", methods=["get", "post"])
 async def create_person_page():
@@ -64,14 +65,17 @@ async def admin_page(password):
         person_id = form.get("person_id")
         new_name = form.get("new_name")
 
+        delete_quote_id = form.get("delete_quote_id")
         delete_person_id = form.get("delete_person_id")
 
         if person_id and new_name:
             await Person_operation.update_person(int(person_id), new_name)
         if delete_person_id:
             await Person_operation.delete_person(int(delete_person_id))
+        if delete_quote_id:
+            await Quotes_operation.delete_quote(int(delete_quote_id))
 
-    return await render_template("admin.html", )
+    return await render_template("admin.html")
         
 
 @app.before_serving

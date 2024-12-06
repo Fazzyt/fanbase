@@ -42,12 +42,11 @@ body {
 }
 
 .quotes_card p {
+    margin: 1px;
     color: var(--text-color);
-    margin-top: 10px;
-    font-size: 16px;
+    font-size: 14px;
 }
 
-.quotes_card img {
-    width: 30px;
-    height: 30px;
-}
+.about_info {
+    margin-top: 10px;
+} 

@@ -1,6 +1,6 @@
 import logging
 
-from sqlalchemy import select
+from sqlalchemy import select, func
 
 from .database import Quotes, async_session
 
@@ -22,6 +22,30 @@ async def create_quote(quote_text: str, person_id: int):
             logger.error(f"Error during quote creation: {e}")
             raise
 
+async def delete_quote(quote_id: int):
+    async with async_session() as session:
+        query = select(Quotes).where(Quotes.id == quote_id)
+        result = await session.execute(query)
+        quote = result.scalar_one_or_none()
+        
+        if quote is None:
+            logger.error(f"Quote with id {quote_id} does not exist")
+            raise ValueError(f"Quote with id {quote_id} does not exist")
+        
+        try:
+            await session.delete(quote)
+            await session.commit()
+            return True
+        except Exception as e:
+            await session.rollback()
+            logger.error(f"Error during quote deletion: {e}")
+            raise
+
+async def get_quote_count_by_person(person_id: int):
+    async with async_session() as session:
+        query = select(func.count(Quotes.id)).where(Quotes.person_id == person_id)
+        result = await session.execute(query)
+        return result.scalar()
 
 async def get_all_quote_by_person(person_id: int):
     async with async_session() as session:

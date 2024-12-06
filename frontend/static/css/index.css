@@ -52,6 +52,7 @@ body {
 }
 
 .card p {
+    margin: 5px;
     color: var(--text-color);
-    font-size: 14px;
+    font-size: 18px;
 }
