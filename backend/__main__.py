@@ -23,6 +23,10 @@ async def main_page():
         person.quote_count = await Quotes_operation.get_quote_count_by_person(person.id)
     return await render_template("index.html", person_list=person_list)
 
+@app.route("/about", methods=["get"])
+async def about_page():
+    return await render_template("about.html")
+
 @app.route("/create_person", methods=["get", "post"])
 async def create_person_page():
     if request.method == "POST":

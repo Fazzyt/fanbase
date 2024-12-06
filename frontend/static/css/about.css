@@ -1,0 +1,31 @@
+
+:root {
+    --background-color: #121212 ;
+    --deep-background-color: #101010;
+    --text-color: #ffffff ;
+    --accent-color: #D76F30;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.navbar-brand {
+    color: var(--text-color);
+}
+
+h1 {
+    color: var(--text-color);
+    font-size: 20px;
+}
+
+p {
+    color: var(--text-color);
+    font-size: 18px;
+}
+
+a {
+    color: var(--accent-color);
+    font-size: 19px;
+}
