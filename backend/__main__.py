@@ -16,48 +16,34 @@ app = Quart(
 logger = logging.getLogger(__name__)
 
 
-@app.route("/", methods=["get"])
+@app.route("/", methods=["get", "post"])
 async def main_page():
-    person_list = await Person_operation.get_all_person()
-    for person in person_list:
-        person.quote_count = await Quotes_operation.get_quote_count_by_person(person.id)
-    return await render_template("index.html", person_list=person_list)
-
-@app.route("/about", methods=["get"])
-async def about_page():
-    return await render_template("about.html")
-
-@app.route("/create_person", methods=["get", "post"])
-async def create_person_page():
     if request.method == "POST":
         form = await request.form
         name = form.get("full_name")
         person = await Person_operation.create_person(fullname= name)
         return redirect(f"/{person.full_name}")
-    
-    return await render_template("create_person.html")
 
+    person_list = await Person_operation.get_all_person()
+    for person in person_list:
+        person.quote_count = await Quotes_operation.get_quote_count_by_person(person.id)
+    return await render_template("index.html", person_list=person_list)
 
-@app.route("/<full_name>", methods=["get"])
+@app.route("/<full_name>", methods=["get", "post"])
 async def person_page(full_name):
     person = await Person_operation.get_person_by_name(full_name=full_name)
 
     if person is None:
         return redirect("/")
     
-    quotes = await Quotes_operation.get_all_quote_by_person(person_id=person.id)
-    return await render_template("person.html", person=person, quotes=quotes)
-
-
-@app.route("/<person_id>/create_quotes", methods=["get", "post"])
-async def create_quotes_page(person_id):
     if request.method == "POST":
         form = await request.form
         quotes_text = form.get("quotes")
-        quotes = await Quotes_operation.create_quote(quote_text=quotes_text, person_id=int(person_id))
-        return redirect(f"/")
+        quotes = await Quotes_operation.create_quote(quote_text=quotes_text, person_id=person.id)
+        return redirect(f"/{person.full_name}")
     
-    return await render_template("create_quotes.html",person_id=person_id)
+    quotes = await Quotes_operation.get_all_quote_by_person(person_id=person.id)
+    return await render_template("person.html", person=person, quotes=quotes)
 
 @app.route("/admin/<password>", methods=["get", "post"])
 async def admin_page(password):
@@ -80,7 +66,10 @@ async def admin_page(password):
             await Quotes_operation.delete_quote(int(delete_quote_id))
 
     return await render_template("admin.html")
-        
+
+@app.route("/about", methods=["get"])
+async def about_page():
+    return await render_template("about.html")   
 
 @app.before_serving
 async def startup():

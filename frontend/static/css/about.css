@@ -28,4 +28,5 @@ p {
 a {
     color: var(--accent-color);
     font-size: 19px;
+    text-decoration: none;
 }

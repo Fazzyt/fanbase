@@ -16,14 +16,47 @@
         <nav class="navbar">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-                    <i class="bi bi-bookmark-star-fill"></i>
+                    <i class="bi bi-people-fill"></i>
                     Fanbase {{ person.full_name }} | {{ person.id }}
                 </a>
                 <div class="navbar-text">
-                    <a href="/{{person.id}}/create_quotes">Сделать цитату</a>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_quotes">
+                        <i class="bi bi-chat-left-text"></i>
+                        Сделать цитату
+                    </button>
                 </div>
             </div>
         </nav>
+
+
+        <div class="modal fade" id="create_quotes" tabindex="-1" aria-labelledby="create_quotesLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="create_quotesLabel">Создание цитаты</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <form method="post">
+                    <div class="modal-body">
+                        <label for="full_name">Цитата:</label>
+                        <input
+                            type="text"
+                            name="quotes"
+                            id="quotes" 
+                            class="form-control" 
+                            placeholder="Введите цитату" 
+                            required>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" value="Создать" class="btn btn-primary">
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
 
         <div class="container">
             <div class="row">
@@ -46,7 +79,9 @@
                 {% endfor %}
             </div>    
         </div>
+
+        <script src="{{ url_for('static',filename='js/jquery.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/bootstrap.js') }}"></script>
     
     </body>
-
 </html>

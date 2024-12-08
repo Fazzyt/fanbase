@@ -15,12 +15,6 @@ body {
     color: var(--text-color);
 }
 
-.navbar-text a {
-    color: var(--text-color);
-    font-size: 18px;
-    text-decoration: none;
-}
-
 .navbar-text a:hover {
     color: var(--accent-color);
 }
@@ -72,4 +66,84 @@ footer a {
     font-size: 18px;
     color: var(--accent-color);
     text-decoration: none;
+}
+
+/* Стили кнопок */
+
+.btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.btn-primary:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 80%, white);
+    border-color: color-mix(in srgb, var(--accent-color) 80%, white);
+}
+
+/* Стили для модального окна */
+.modal {
+    --bs-modal-bg: var(--background-color);
+    --bs-modal-border-color: var(--accent-color);
+}
+
+.modal-content {
+    background-color: var(--deep-background-color);
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--accent-color);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--accent-color);
+}
+
+.modal-title {
+    color: var(--text-color);
+}
+
+.modal .form-control {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+}
+
+.modal .form-control:focus {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(215, 111, 48, 0.25);
+}
+
+.modal .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.modal .btn {
+    transition: all 0.3s ease;
+}
+
+.modal .btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.modal .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 80%, white);
+    border-color: color-mix(in srgb, var(--accent-color) 80%, white);
+}
+
+.modal .btn-secondary {
+    background-color: var(--background-color);
+    border-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.modal .btn-secondary:hover {
+    background-color: color-mix(in srgb, var(--background-color) 80%, var(--accent-color));
+    border-color: var(--accent-color);
 }
