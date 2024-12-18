@@ -1,0 +1,80 @@
+:root {
+    --background-color: #121212;
+    --deep-background-color: #101010;
+    --text-color: #ffffff;
+    --accent-color: #D76F30;
+    --danger-color: #FF4136;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+}
+
+.admin-container {
+    background-color: var(--deep-background-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 15px;
+    padding: 40px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.admin-title {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.form-control {
+    background-color: var(--background-color);
+    border-color: var(--accent-color);
+    color: var(--text-color);
+}
+
+.form-control:focus {
+    background-color: var(--background-color);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(215, 111, 48, 0.25);
+    color: var(--text-color);
+}
+
+.btn-primary, .btn-danger {
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.btn-primary:hover {
+    background-color: color-mix(in srgb, var(--accent-color) 80%, white);
+    border-color: color-mix(in srgb, var(--accent-color) 80%, white);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+}
+
+.btn-danger:hover {
+    background-color: color-mix(in srgb, var(--danger-color) 80%, white);
+    border-color: color-mix(in srgb, var(--danger-color) 80%, white);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}

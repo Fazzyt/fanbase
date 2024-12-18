@@ -1,39 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Fanbase - Админка</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icons.css') }}">
 </head>
-
 <body>
     <div class="container">
-        <form action="" method="post">
+        <div class="admin-container">
+            <h2 class="admin-title">
+                <i class="bi bi-shield-lock"></i> Панель администратора
+            </h2>
 
-            <label for="person_id">Айди персоны:</label>
-            <input type="text" name="person_id" id="person_id" placeholder="Айди персоны" required>
-            <label for="person_id">Новое имя:</label>
-            <input type="text" name="new_name" id="new_name" placeholder="Новое имя" required>
+            <form action="" method="post" class="mb-4">
+                <div class="form-group">
+                    <label for="person_id">Айди персоны:</label>
+                    <input type="text" name="person_id" id="person_id" 
+                           placeholder="Введите ID персоны" 
+                           class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="new_name">Новое имя:</label>
+                    <input type="text" name="new_name" id="new_name" 
+                           placeholder="Введите новое имя" 
+                           class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-pencil"></i> Изменить персону
+                </button>
+            </form>
 
-            <input type="submit" value="Изменить" class="btn btn-primary">
-        </form>
-        <form action="" method="post">
+            <form action="" method="post" class="mb-4">
+                <div class="form-group">
+                    <label for="delete_person_id">Айди персоны для удаления:</label>
+                    <input type="text" name="delete_person_id" 
+                           id="delete_person_id" 
+                           placeholder="Введите ID персоны" 
+                           class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-danger w-100">
+                    <i class="bi bi-trash"></i> Удалить персону
+                </button>
+            </form>
 
-            <label for="delete_person_id">Айди персоны для удаление:</label>
-            <input type="text" name="delete_person_id" id="delete_person_id" placeholder="Айди персоны для удаление" required>
-
-            <input type="submit" value="Удалить" class="btn btn-danger">
-        </form>
-        <form action="" method="post">
-
-            <label for="delete_quote_id">Айди цитаты для удаление:</label>
-            <input type="text" name="delete_quote_id" id="delete_quote_id" placeholder="Айди цитаты для удаление" required>
-
-            <input type="submit" value="Удалить" class="btn btn-danger">
-        </form>
+            <form action="" method="post">
+                <div class="form-group">
+                    <label for="delete_quote_id">Айди цитаты для удаления:</label>
+                    <input type="text" name="delete_quote_id" 
+                           id="delete_quote_id" 
+                           placeholder="Введите ID цитаты" 
+                           class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-danger w-100">
+                    <i class="bi bi-trash-fill"></i> Удалить цитату
+                </button>
+            </form>
+        </div>
     </div>
 </body>
-
 </html>

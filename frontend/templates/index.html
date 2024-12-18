@@ -41,13 +41,12 @@
 
                 <form action="/" method="post">
                     <div class="modal-body">
-                        <label for="full_name">Имя цитируемого:</label>
+                        <label for="full_name">ФИО цитируемого:</label>
                         <input
                             type="text"
                             name="full_name" 
                             id="full_name" 
-                            class="form-control" 
-                            placeholder="Имя преподавателя" 
+                            class="form-control"
                             required>
                     </div>
 
@@ -62,16 +61,18 @@
 
         <div class="container">
             <div class="row">
-                {% for person in person_list %} 
-                    <div class="col-md-8">
-                        <div class="card">
-                            <h3>{{ person.full_name|e }}</h3>
-                            <a href="/{{person.full_name}}">
-                                посмотреть все цитаты
-                            </a>
-                            <p class="text-start"><b>Количество цитат: {{ person.quote_count }}</b></p>
+                {% for person in person_list %}
+                    <a href="/{{person.full_name}}">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <h3>{{ person.full_name|e }}</h3>
+                                <p class="text-start">
+                                    <i class="bi bi-journals"></i> 
+                                    <b>Количество цитат: {{ person.quote_count }}</b>
+                                </p>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 {% endfor %}
             </div>  
         </div>

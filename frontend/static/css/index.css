@@ -19,6 +19,10 @@ body {
     color: var(--accent-color);
 }
 
+.container a {
+    text-decoration: none;
+}
+
 .card {
     background-color: var(--deep-background-color);
     border: 1px solid var(--accent-color);
@@ -29,26 +33,19 @@ body {
     z-index: 1;
 }
 
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 20px 50px var(--accent-color);
-}
-
 .card h3 {
     color: var(--text-color);
     font-size: 24px;
-}
-
-.card a {
-    color: var(--accent-color);
-    font-size: 18px;
-    text-decoration: none;
 }
 
 .card p {
     margin: 5px;
     color: var(--text-color);
     font-size: 18px;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 footer {
