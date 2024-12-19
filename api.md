@@ -7,12 +7,14 @@
 
 ### 1. Получение цитат
 `GET /get_quotes`
+`GET /get_all_quote`
 
 #### Параметры
 - `person_id` (обязательный): ID персоны
 
 #### Примеры запросов
 /api/v1/get_quotes?person_id=1      # Цитаты персоны по ID
+/api/v1/get_all_quote   # Все цитаты из базы данных
 
 ### Ответ
 {

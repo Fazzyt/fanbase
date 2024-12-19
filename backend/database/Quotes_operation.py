@@ -56,3 +56,13 @@ async def get_all_quote_by_person(person_id: int):
         except Exception as e:
             logger.error(f"Error getting all person: {e}")
             return None
+        
+async def get_all_quote():
+    async with async_session() as session:
+        query = select(Quotes)
+        try:
+            result = await session.execute(query)
+            return result.scalars().all()
+        except Exception as e:
+            logger.error(f"Error getting all quotes: {e}")
+            return None
