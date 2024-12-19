@@ -70,6 +70,16 @@ async def get_person_by_name(full_name: str):
             logger.error(f"Error getting person by name={full_name}: {e}")
             return None
 
+async def get_person_by_id(user_id: int):
+    async with async_session() as session:
+        query = select(Person).where(Person.id == user_id)
+        try:
+            result = await session.execute(query)
+            return result.scalars().first()
+        except Exception as e:
+            logger.error(f"Error getting person by name={user_id}: {e}")
+            return None
+
 async def get_all_person():
     async with async_session() as session:
         query = select(Person)

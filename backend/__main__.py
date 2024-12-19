@@ -2,7 +2,7 @@ import asyncio
 import logging
 import hashlib
 
-from quart import Quart, render_template, request, redirect
+from quart import Quart, render_template, request, redirect, jsonify
 
 from .database import database, Person_operation, Quotes_operation
 from .config import config
@@ -70,6 +70,113 @@ async def admin_page(password):
 @app.route("/about", methods=["get"])
 async def about_page():
     return await render_template("about.html")   
+
+
+@app.route("/api/v1/get_person", methods=["GET"])
+async def api_get_person_by_name():
+    full_name = request.args.get('full_name', type=str)
+    
+    if not full_name:
+        return jsonify({
+            "error": "full_name is required",
+            "status": 400
+        }), 400
+    
+    try:
+        person = await Person_operation.get_person_by_name(full_name)
+        
+        if not person:
+            return jsonify({
+                "error": "No found person",
+                "status": 404
+            }), 404
+        
+        return jsonify({
+            "person": [
+                {
+                    "id": person.id,
+                    "full_name": person.full_name
+                }
+            ],
+            "status": 200
+        })
+    
+    except Exception as e:
+        return jsonify({
+            "error": str(e),
+            "status": 500
+        }), 500
+
+@app.route("/api/v1/get_person", methods=["GET"])
+async def api_get_person_by_id():
+    person_id = request.args.get('person_id', type=int)
+    
+    if not person_id:
+        return jsonify({
+            "error": "person_id is required",
+            "status": 400
+        }), 400
+    
+    try:
+        person = await Person_operation.get_person_by_id(person_id)
+        
+        if not person:
+            return jsonify({
+                "error": "No found person",
+                "status": 404
+            }), 404
+        
+        return jsonify({
+            "person": [
+                {
+                    "id": person.id,
+                    "full_name": person.full_name
+                }
+            ],
+            "status": 200
+        })
+    
+    except Exception as e:
+        return jsonify({
+            "error": str(e),
+            "status": 500
+        }), 500
+
+@app.route("/api/v1/get_quotes", methods=["GET"])
+async def api_get_quotes():
+    person_id = request.args.get('person_id', type=int)
+    
+    if not person_id:
+        return jsonify({
+            "error": "person_id is required",
+            "status": 400
+        }), 400
+    
+    try:
+        quotes = await Quotes_operation.get_all_quote_by_person(person_id)
+        
+        if not quotes:
+            return jsonify({
+                "error": "No quotes found for this person",
+                "status": 404
+            }), 404
+        
+        return jsonify({
+            "quotes": [
+                {
+                    "id": quote.id,
+                    "quote": quote.quote,
+                    "person_id": quote.person_id
+                } for quote in quotes
+            ],
+            "status": 200
+        })
+    
+    except Exception as e:
+        return jsonify({
+            "error": str(e),
+            "status": 500
+        }), 500
 
 @app.before_serving
 async def startup():
