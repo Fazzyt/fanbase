@@ -67,8 +67,8 @@
                             <div class="card">
                                 <h3>{{ person.full_name|e }}</h3>
                                 <p class="text-start">
-                                    <i class="bi bi-journals"></i> 
-                                    <b>Количество цитат: {{ person.quote_count }}</b>
+                                    <span><i class="bi bi-journals"></i></span> 
+                                    <b>Количество цитат: <span>{{ person.quote_count }}</span></b>
                                 </p>
                             </div>
                         </div>
@@ -83,9 +83,9 @@
                     <div class="col-md-6">
                         <p>
                             <i class="bi bi-file-person"></i>
-                            О нас
+                            О нас:
+                            <a href="/about">Ссылка</a>
                         </p>
-                        <a href="/about">Ссылка</a>
                     </div>
                     <div class="col-md-6">
                         <p class="text-center">&copy;fanbase 2024</p>

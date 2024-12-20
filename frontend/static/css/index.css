@@ -44,6 +44,10 @@ body {
     font-size: 18px;
 }
 
+.card p span {
+    color: var(--accent-color);
+}
+
 .card:hover {
     transform: scale(1.05);
 }
