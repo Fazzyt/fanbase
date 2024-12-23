@@ -20,6 +20,13 @@
                     Fanbase {{ person.full_name }} | {{ person.id }}
                 </a>
                 
+                <input 
+                    type="text"
+                    class="search" 
+                    id="search" 
+                    placeholder="Найти..." 
+                    onkeyup="searchFunction()">
+
                 <div class="navbar-text">
                     <button class="btn btn-primary" id="theme-toggle">
                         <i class="bi bi-moon"></i>
@@ -83,6 +90,7 @@
             </div>    
         </div>
 
+        <script src="{{ url_for('static', filename='js/search.js') }}"></script>
         <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
         <script src="{{ url_for('static',filename='js/jquery.js') }}"></script>
         <script src="{{ url_for('static',filename='js/bootstrap.js') }}"></script>

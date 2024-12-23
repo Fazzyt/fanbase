@@ -25,6 +25,14 @@ body {
     color: var(--accent-color);
 }
 
+.search {
+    background-color: var(--background-color);
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    border-radius: 5px;
+    padding: 6px 12px;
+}
+
 .container a {
     text-decoration: none;
 }
