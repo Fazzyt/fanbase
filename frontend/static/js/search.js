@@ -1,17 +1,21 @@
 function searchFunction() {
     const input = document.getElementById('search').value.toLowerCase();
-    const people = document.querySelectorAll('.card');
-    const quotes = document.querySelectorAll('.quotes_card');
+    const people = document.querySelectorAll('.people');
+    const cards = document.querySelectorAll('.card');
+    const quotes = document.querySelectorAll('.quotes');
+    const quotesCards = document.querySelectorAll('.quotes_card');
 
     // Фильтрация людей
-    people.forEach(person => {
+    people.forEach((person, index) => {
         const name = person.textContent.toLowerCase();
-        person.style.display = name.includes(input) ? '' : 'none';
+        const card = cards[index];
+        card.style.display = name.includes(input) || input === '' ? '' : 'none';
     });
 
     // Фильтрация цитат
-    quotes.forEach(quote => {
+    quotes.forEach((quote, index) => {
         const text = quote.textContent.toLowerCase();
-        quote.style.display = text.includes(input) ? '' : 'none';
+        const quoteCard = quotesCards[index];
+        quoteCard.style.display = text.includes(input) || input === '' ? '' : 'none';
     });
 }
