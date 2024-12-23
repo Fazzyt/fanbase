@@ -1,9 +1,16 @@
 
-:root {
+:root[data-theme='dark'] {
     --background-color: #121212 ;
     --deep-background-color: #101010;
     --text-color: #ffffff ;
     --accent-color: #D76F30;
+}
+
+:root[data-theme='light'] {
+    --background-color: #F8F9FA;
+    --deep-background-color: #e9e9e9;
+    --text-color: #212529;
+    --accent-color: #007BFF;
 }
 
 body {
