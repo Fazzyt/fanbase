@@ -67,9 +67,15 @@ body {
 }
 
 footer {
+    border-top: 1px solid var(--accent-color);
     margin-top: 30px;
     padding: 30px;
     background-color: var(--deep-background-color);
+}
+
+footer h1 {
+    color: var(--text-color);
+    font-size: 22px;
 }
 
 footer p {
@@ -81,6 +87,10 @@ footer a {
     font-size: 18px;
     color: var(--accent-color);
     text-decoration: none;
+}
+
+footer a:hover {
+    color: var(--text-color);
 }
 
 /* Стили кнопок */
