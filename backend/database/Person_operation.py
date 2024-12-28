@@ -36,6 +36,7 @@ async def update_person(person_id: int, fullname: str):
         try:
             await session.commit()
             await session.refresh(person)
+            return person
         except Exception as e:
             await session.rollback()
             logger.error(f"Error during person update: {e}")

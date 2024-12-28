@@ -2,7 +2,7 @@ import asyncio
 import logging
 import hashlib
 
-from quart import Quart, render_template, request, redirect, jsonify
+from quart import Quart, render_template, request, redirect, url_for
 
 from .database import database, Person_operation, Quotes_operation
 from .config import config
@@ -46,6 +46,17 @@ async def person_page(full_name):
     
     quotes = await Quotes_operation.get_all_quote_by_person(person_id=person.id)
     return await render_template("person.html", person=person, quotes=quotes)
+
+@app.route('/edit_quote/<int:quote_id>', methods=['POST'])
+async def edit_quote(quote_id):
+    form = await request.form
+    new_quote_text = form.get('quote_text')
+
+    quote = await Quotes_operation.update_quote(quote_id, new_quote_text)
+
+    person = await Person_operation.get_person_by_id(quote.person_id)
+
+    return redirect(f"/{person.full_name}")
 
 @app.route("/admin/<password>", methods=["get", "post"])
 async def admin_page(password):

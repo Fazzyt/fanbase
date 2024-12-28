@@ -39,50 +39,79 @@
             </div>
         </nav>
 
+        <!--Создание цитат-->
 
         <div class="modal fade" id="create_quotes" tabindex="-1" aria-labelledby="create_quotesLabel" aria-hidden="true">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="create_quotesLabel">Создание цитаты</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="create_quotesLabel">Создание цитаты</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <form method="post">
+                        <div class="modal-body">
+                            <label for="full_name">Введите цитату:</label>
+                            <textarea
+                                type="text"
+                                name="quotes"
+                                id="quotes" 
+                                class="form-control" 
+                                required></textarea>
+                        </div>
+
+                        <div class="modal-footer">
+                            <input type="submit" value="Создать" class="btn btn-primary">
+                        </div>
+                    </form>
                 </div>
-
-                <form method="post">
-                    <div class="modal-body">
-                        <label for="full_name">Введите цитату:</label>
-                        <textarea
-                            type="text"
-                            name="quotes"
-                            id="quotes" 
-                            class="form-control" 
-                            required></textarea>
-                    </div>
-
-                    <div class="modal-footer">
-                        <input type="submit" value="Создать" class="btn btn-primary">
-                    </div>
-                </form>
-              </div>
             </div>
-          </div>
+        </div>
 
-
+        
         <div class="container">
             <div class="row">
                 {% for quote in quotes %}
+
+                    <!--Редактирование цитат-->
+
+                    <div class="modal fade" id="edit_quote_{{ quote.id }}" tabindex="-1" aria-labelledby="edit_quoteLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="edit_quoteLabel">Редактировать цитату | {{ quote.id }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <form method="post" action="/edit_quote/{{ quote.id }}">
+                                    <div class="modal-body">
+                                        <label for="quote_text">Цитата:</label>
+                                        <textarea name="quote_text" id="quote_text" class="form-control" required>{{ quote.quote }}</textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="submit" value="Сохранить изменения" class="btn btn-primary">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Вывод цитат-->
+
                     <div class="col-md-8">
                         <div class="quotes_card">
+                            
+                            <div class="edit-button-container">
+                                <button type="button" class="btn btn-border" data-bs-toggle="modal" data-bs-target="#edit_quote_{{ quote.id }}">
+                                    <i class="bi bi-pencil"></i>
+                                </button>
+                            </div>
+
                             <h2 class="quotes">{{ quote.quote|e }}</h2>
                             <div class="about_info">
                                 <p>
                                     <i class="bi bi-person-circle"></i>
                                     {{ person.full_name }}
-                                </p>
-                                <p>
-                                    <i class="bi bi-star-fill"></i>
-                                    id: {{ quote.id }}
-                                </p>
+                                </p>           
                             </div>
                         </div>
                     </div>

@@ -41,6 +41,27 @@ async def delete_quote(quote_id: int):
             logger.error(f"Error during quote deletion: {e}")
             raise
 
+async def update_quote(quote_id: int, quote_text: str):
+    async with async_session() as session:
+        query = select(Quotes).where(Quotes.id == quote_id)
+        result = await session.execute(query)
+        quote = result.scalar_one_or_none()
+
+        if quote is None:
+            logger.error(f"Quote with id {quote_id} does not exist")
+            raise ValueError(f"Quote with id {quote_id} does not exist")
+        
+        quote.quote = quote_text
+
+        try:
+            await session.commit()
+            await session.refresh(quote)
+            return quote
+        except Exception as e:
+            await session.rollback()
+            logger.error(f"Error during quote editing: {e}")
+            raise
+
 async def get_quote_count_by_person(person_id: int):
     async with async_session() as session:
         query = select(func.count(Quotes.id)).where(Quotes.person_id == person_id)
