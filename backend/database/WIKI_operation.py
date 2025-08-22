@@ -16,12 +16,78 @@ UPLOAD_FOLDER = "uploads/wiki_images"
 ALLOWED_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.webp'}
 MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
 
+# Дополнительные настройки безопасности
+SECURE_UPLOAD = True  # Включить дополнительные проверки безопасности
+BLOCK_EXECUTABLE_EXTENSIONS = True  # Блокировать исполняемые файлы
+
 # Создаем папку для загрузок если её нет
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 def is_allowed_file(filename: str) -> bool:
     """Проверяет, является ли файл разрешенным типом"""
     return Path(filename).suffix.lower() in ALLOWED_EXTENSIONS
+
+def is_valid_image_file(file) -> bool:
+    """Проверяет, является ли файл действительно изображением"""
+    import imghdr
+    
+    # Проверяем MIME-тип
+    if not file.content_type or not file.content_type.startswith('image/'):
+        return False
+    
+    # Проверяем содержимое файла
+    try:
+        # Читаем первые 32 байта для определения типа
+        file.seek(0)
+        header = file.read(32)
+        file.seek(0)  # Возвращаемся в начало
+        
+        # Проверяем магические числа для изображений
+        image_type = imghdr.what(None, h=header)
+        if not image_type or image_type not in ['jpeg', 'jpg', 'png', 'gif', 'webp']:
+            return False
+            
+        return True
+    except Exception:
+        return False
+
+def check_file_security(file) -> bool:
+    """Дополнительные проверки безопасности файла"""
+    if not SECURE_UPLOAD:
+        return True
+    
+    try:
+        # Проверяем на наличие вредоносных паттернов
+        file.seek(0)
+        content = file.read(1024)  # Читаем первые 1KB
+        file.seek(0)
+        
+        # Блокируем PHP код
+        if b'<?php' in content or b'<?=' in content:
+            return False
+        
+        # Блокируем JavaScript код
+        if b'<script' in content or b'javascript:' in content:
+            return False
+        
+        # Блокируем HTML теги
+        if b'<html' in content or b'<!DOCTYPE' in content:
+            return False
+        
+        # Блокируем исполняемые файлы
+        if BLOCK_EXECUTABLE_EXTENSIONS:
+            dangerous_patterns = [
+                b'MZ',  # Windows PE
+                b'\x7fELF',  # Linux ELF
+                b'#!/',  # Shebang
+            ]
+            for pattern in dangerous_patterns:
+                if content.startswith(pattern):
+                    return False
+        
+        return True
+    except Exception:
+        return False
 
 def get_safe_filename(filename: str) -> str:
     """Генерирует безопасное имя файла"""
@@ -112,6 +178,14 @@ async def upload_wiki_image(wiki_id: int, file, uploaded_by: Optional[str] = Non
     
     if not is_allowed_file(file.filename):
         raise ValueError(f"File type not allowed. Allowed types: {', '.join(ALLOWED_EXTENSIONS)}")
+    
+    # Проверяем, что файл действительно является изображением
+    if not is_valid_image_file(file):
+        raise ValueError("File is not a valid image. Content validation failed.")
+    
+    # Дополнительные проверки безопасности
+    if not check_file_security(file):
+        raise ValueError("File contains potentially dangerous content. Security check failed.")
     
     # Проверяем размер файла
     file.seek(0, 2)  # Перемещаемся в конец файла
