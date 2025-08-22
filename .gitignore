@@ -1,6 +1,47 @@
+# Загруженные файлы
+uploads/
+*.db
+*.sqlite
+*.sqlite3
 
-*.log
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Other
 config.json
-/backend/__pycache__
-/backend/database/__pycache__
-/backend/api_system/__pycache__
+*.log

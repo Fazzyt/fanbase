@@ -72,17 +72,23 @@
         <div class="container">
             <div class="row">
                 {% for person in person_list %}
-                    <a href="/{{person.full_name}}">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <h3 class="people">{{ person.full_name|e }}</h3>
-                                <p class="text-start">
-                                    <span><i class="bi bi-chat-right-quote"></i></span> 
-                                    <b>Всего цитат: <span>{{ person.quote_count }}</span></b>
-                                </p>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <h3 class="people">{{ person.full_name|e }}</h3>
+                            <p class="text-start">
+                                <span><i class="bi bi-chat-right-quote"></i></span> 
+                                <b>Всего цитат: <span>{{ person.quote_count }}</span></b>
+                            </p>
+                            <div class="card-actions">
+                                <a href="/{{person.full_name}}" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-chat-right-quote"></i> Цитаты
+                                </a>
+                                <a href="/wiki/{{person.full_name}}" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-book"></i> Wiki
+                                </a>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 {% endfor %}
             </div>  
         </div>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>fanbase - Wiki {{ person.full_name }}</title>
+
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/icons.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/person.css') }}">
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/wiki.css') }}">
+    </head>
+
+    <body>
+        <nav class="navbar">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <i class="bi bi-people-fill"></i>
+                    Fanbase wiki {{ person.full_name }} | {{ person.id }}
+                </a>
+            </div>
+        </nav>
+        
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    {% if wiki %}
+                        <div class="wiki-card">
+                            <div class="wiki-header">
+                                <h2 class="wiki-title">
+                                    <i class="bi bi-book"></i> Wiki: {{ person.full_name }}
+                                </h2>
+                                <div>
+                                    <a href="/{{ person.full_name }}" class="btn btn-outline-secondary back-btn">
+                                        <i class="bi bi-arrow-left"></i> Назад к цитатам
+                                    </a>
+                                    <button class="btn btn-outline-primary" onclick="toggleEdit()">
+                                        <i class="bi bi-pencil"></i> Редактировать
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="wiki-meta">
+                                <small>
+                                    <i class="bi bi-clock"></i> 
+                                    Создано: {% if wiki.created_at %}{{ wiki.created_at }}{% else %}Неизвестно{% endif %}
+                                    {% if wiki.updated_at and wiki.updated_at != wiki.created_at %}
+                                        | Обновлено: {{ wiki.updated_at }}
+                                    {% endif %}
+                                    {% if wiki.created_by %}
+                                        | Автор: {{ wiki.created_by }}
+                                    {% endif %}
+                                </small>
+                            </div>
+                            
+                            <div class="wiki-description" id="wiki-description">
+                                {{ wiki.description|e }}
+                            </div>
+                            
+                            <!-- Показываем изображения в режиме просмотра с кнопками удаления -->
+                            {% if wiki.images is defined and wiki.images and wiki.images|length > 0 %}
+                            <div class="images-preview">
+                                <h4><i class="bi bi-images"></i> Изображения</h4>
+                                <div class="image-grid-preview">
+                                    {% for image in wiki.images %}
+                                        <div class="image-item-preview" data-image-id="{{ image.id }}">
+                                            <img src="/api/v1/wiki/images/{{ image.id }}/file" 
+                                                 alt="{{ image.original_filename }}"
+                                                 title="{{ image.original_filename }}">
+                                            <div class="image-overlay-preview">
+                                                <button class="btn btn-sm btn-danger delete-btn" onclick="deleteImage({{ image.id }})">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            
+                            <form class="edit-form" id="edit-form" method="POST" onsubmit="trimTextarea()">
+                                <textarea name="description" id="edit-textarea" placeholder="Введите описание...">{{ wiki.description|e }}</textarea>
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-check"></i> Сохранить
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="cancelEdit()">
+                                        <i class="bi bi-x"></i> Отмена
+                                    </button>
+                                </div>
+                            </form>
+                            
+                            <!-- Секция изображений (только при редактировании) -->
+                            <div class="images-section" id="images-section">
+                                <!-- Форма загрузки -->
+                                {% if wiki and wiki.id is defined %}
+                                <div class="upload-section" id="upload-section" data-wiki-id="{{ wiki.id }}">
+                                    <i class="bi bi-cloud-upload" style="font-size: 2rem; color: #6c757d;"></i>
+                                    <h5>Загрузить изображение</h5>
+                                    <p>Перетащите файл сюда или нажмите кнопку для выбора</p>
+                                    <input type="file" id="file-input" class="file-input" accept="image/*" multiple>
+                                    <button class="upload-btn" onclick="document.getElementById('file-input').click()">
+                                        <i class="bi bi-upload"></i> Выбрать файл
+                                    </button>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="wiki-card">
+                            <div class="no-wiki">
+                                <i class="bi bi-book" style="font-size: 3rem; color: #6c757d;"></i>
+                                <h3>Wiki для {{ person.full_name }} не создана</h3>
+                                <p>Создайте первое описание для этого человека</p>
+                                <div class="btn-group">
+                                    <a href="/{{ person.full_name }}" class="btn btn-outline-secondary">
+                                        <i class="bi bi-arrow-left"></i> Назад к цитатам
+                                    </a>
+                                    <button class="btn btn-primary" onclick="createWiki()">
+                                        <i class="bi bi-plus"></i> Создать Wiki
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <form class="edit-form" id="create-form" method="POST" style="display: none;" onsubmit="trimTextarea()">
+                                <h4>Создать новую Wiki</h4>
+                                <textarea name="description" id="create-textarea" placeholder="Введите описание..."></textarea>
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-check"></i> Создать
+                                    </button>
+                                    <button type="button" class="btn btn-secondary" onclick="cancelCreate()">
+                                        <i class="bi bi-x"></i> Отмена
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>    
+        </div>
+
+        <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/jquery.js') }}"></script>
+        <script src="{{ url_for('static',filename='js/bootstrap.js') }}"></script>
+        
+        <script>
+            function toggleEdit() {
+                document.getElementById('wiki-description').style.display = 'none';
+                document.getElementById('edit-form').style.display = 'block';
+                document.getElementById('images-section').classList.add('show'); // Показываем секцию изображений
+                
+                // Включаем режим редактирования для изображений (показываем кнопки удаления)
+                const imagesPreview = document.querySelector('.images-preview');
+                if (imagesPreview) {
+                    imagesPreview.classList.add('edit-mode');
+                }
+                
+                // Обрезаем пробелы, но сохраняем переносы строк в textarea при открытии редактирования
+                const textarea = document.getElementById('edit-textarea');
+                if (textarea) {
+                    // Обрабатываем каждую строку отдельно, чтобы сохранить переносы
+                    const lines = textarea.value.trim().split('\n');
+                    const processedLines = lines.map(line => 
+                        line.trim() ? line.replace(/\s+/g, ' ').trim() : ''
+                    );
+                    textarea.value = processedLines.join('\n');
+                }
+            }
+            
+            function cancelEdit() {
+                document.getElementById('wiki-description').style.display = 'block';
+                document.getElementById('edit-form').style.display = 'none';
+                document.getElementById('images-section').classList.remove('show'); // Скрываем секцию изображений
+                
+                // Выключаем режим редактирования для изображений (скрываем кнопки удаления)
+                const imagesPreview = document.querySelector('.images-preview');
+                if (imagesPreview) {
+                    imagesPreview.classList.remove('edit-mode');
+                }
+            }
+            
+            function createWiki() {
+                document.getElementById('create-form').style.display = 'block';
+            }
+            
+            function cancelCreate() {
+                document.getElementById('create-form').style.display = 'none';
+            }
+            
+            function trimTextarea() {
+                // Обрезаем пробелы, но сохраняем переносы строк
+                const textarea = document.getElementById('edit-textarea');
+                if (textarea) {
+                    // Обрабатываем каждую строку отдельно, чтобы сохранить переносы
+                    const lines = textarea.value.trim().split('\n');
+                    const processedLines = lines.map(line => 
+                        line.trim() ? line.replace(/\s+/g, ' ').trim() : ''
+                    );
+                    textarea.value = processedLines.join('\n');
+                }
+                
+                const createTextarea = document.getElementById('create-textarea');
+                if (createTextarea) {
+                    // Обрабатываем каждую строку отдельно, чтобы сохранить переносы
+                    const lines = createTextarea.value.trim().split('\n');
+                    const processedLines = lines.map(line => 
+                        line.trim() ? line.replace(/\s+/g, ' ').trim() : ''
+                    );
+                    createTextarea.value = processedLines.join('\n');
+                }
+            }
+            
+            // Drag and drop для загрузки файлов
+            const uploadSection = document.getElementById('upload-section');
+            const fileInput = document.getElementById('file-input');
+            
+            if (uploadSection) {
+                uploadSection.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    uploadSection.classList.add('dragover');
+                });
+                
+                uploadSection.addEventListener('dragleave', () => {
+                    uploadSection.classList.remove('dragover');
+                });
+                
+                uploadSection.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    uploadSection.classList.remove('dragover');
+                    const files = e.dataTransfer.files;
+                    handleFiles(files);
+                });
+                
+                fileInput.addEventListener('change', (e) => {
+                    handleFiles(e.target.files);
+                });
+            }
+            
+            function handleFiles(files) {
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        uploadImage(file);
+                    }
+                });
+            }
+            
+            async function uploadImage(file) {
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('uploaded_by', 'user');
+                
+                try {
+                    const uploadSection = document.getElementById('upload-section');
+                    const wikiId = uploadSection.getAttribute('data-wiki-id');
+                    const response = await fetch(`/api/v1/wiki/${wikiId}/images`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (response.ok) {
+                        location.reload(); // Перезагружаем страницу для отображения нового изображения
+                    } else {
+                        const error = await response.json();
+                        alert('Ошибка загрузки: ' + error.error);
+                    }
+                } catch (error) {
+                    alert('Ошибка загрузки: ' + error.message);
+                }
+            }
+            
+            async function deleteImage(imageId) {
+                if (!confirm('Вы уверены, что хотите удалить это изображение?')) {
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`/api/v1/wiki/images/${imageId}`, {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        location.reload(); // Перезагружаем страницу
+                    } else {
+                        const error = await response.json();
+                        alert('Ошибка удаления: ' + error.error);
+                    }
+                } catch (error) {
+                    alert('Ошибка удаления: ' + error.message);
+                }
+            }
+        </script>
+    </body>
+</html>

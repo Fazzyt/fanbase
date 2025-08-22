@@ -1,0 +1,463 @@
+/* CSS переменные для тем */
+:root[data-theme='dark'] {
+    --background-color: #121212;
+    --deep-background-color: #101010;
+    --text-color: #ffffff;
+    --accent-color: #D76F30;
+    
+    /* Дополнительные переменные для wiki */
+    --card-bg: #1e1e1e;
+    --card-border: #333333;
+    --input-bg: #2a2a2a;
+    --input-border: #444444;
+    --primary-color: #D76F30;
+    --primary-hover: #b85a28;
+    --light-bg: #2a2a2a;
+    --light-primary-bg: #3a2a1a;
+    --border-color: #444444;
+    --muted-color: #aaaaaa;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --secondary-color: #6c757d;
+}
+
+:root[data-theme='light'] {
+    --background-color: #fdfdfd;
+    --deep-background-color: #f3f3f3;
+    --text-color: #121212;
+    --accent-color: #D76F30;
+    
+    /* Дополнительные переменные для wiki */
+    --card-bg: #ffffff;
+    --card-border: #e0e0e0;
+    --input-bg: #ffffff;
+    --input-border: #e0e0e0;
+    --primary-color: #D76F30;
+    --primary-hover: #b85a28;
+    --light-bg: #f8f9fa;
+    --light-primary-bg: #e3f2fd;
+    --border-color: #dee2e6;
+    --muted-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --secondary-color: #6c757d;
+}
+
+/* Основные стили */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Стили для wiki карточек */
+.wiki-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: 1px solid var(--card-border);
+    overflow: hidden;
+}
+
+.wiki-description {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 20px 0;
+    white-space: pre-line; /* Изменено с pre-wrap на pre-line для лучшей обработки пробелов */
+    color: var(--text-color);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    text-align: left;
+    padding: 15px;
+    background: var(--light-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.wiki-description:empty::before {
+    content: "Описание отсутствует";
+    color: var(--muted-color);
+    font-style: italic;
+}
+
+.edit-form {
+    display: none;
+    margin: 20px 0;
+}
+
+.edit-form textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 15px;
+    border: 2px solid var(--input-border);
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: inherit;
+    resize: vertical;
+    background: var(--input-bg);
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+.edit-form textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(215, 111, 48, 0.1);
+}
+
+.btn-group {
+    margin: 15px 0;
+}
+
+.btn-group .btn {
+    margin-right: 10px;
+}
+
+/* Стили для изображений в режиме просмотра */
+.images-preview {
+    margin: 30px 0;
+    display: block; /* Всегда видно в режиме просмотра */
+}
+
+.images-preview h4 {
+    color: var(--text-color);
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.image-grid-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.image-item-preview {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    min-height: 200px;
+    aspect-ratio: 1;
+}
+
+.image-item-preview:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.image-item-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: var(--light-bg);
+}
+
+/* Стили для overlay с кнопкой удаления в режиме просмотра */
+.image-overlay-preview {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: none; /* По умолчанию скрыто */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+/* Показываем overlay только в режиме редактирования */
+.edit-mode .image-overlay-preview {
+    display: flex;
+}
+
+.edit-mode .image-item-preview:hover .image-overlay-preview {
+    opacity: 1;
+}
+
+.image-overlay-preview .btn {
+    margin: 5px;
+    z-index: 10;
+}
+
+.image-overlay-preview .delete-btn {
+    background: var(--danger-color);
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.image-overlay-preview .delete-btn:hover {
+    background: #c82333;
+}
+
+
+
+/* Стили для изображений в режиме редактирования */
+.images-section {
+    margin: 30px 0;
+    display: none; /* Скрыто по умолчанию */
+}
+
+.images-section.show {
+    display: block; /* Показывается при редактировании */
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.image-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    min-height: 200px;
+    aspect-ratio: 1;
+}
+
+.image-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: var(--light-bg);
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.image-item:hover .image-overlay {
+    opacity: 1;
+}
+
+.image-overlay .btn {
+    margin: 5px;
+    z-index: 10;
+}
+
+/* Стили для загрузки */
+.upload-section {
+    background: var(--light-bg);
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    margin: 20px 0;
+    transition: border-color 0.2s;
+}
+
+.upload-section:hover {
+    border-color: var(--primary-color);
+}
+
+.upload-section.dragover {
+    border-color: var(--primary-color);
+    background: var(--light-primary-bg);
+}
+
+.upload-section h5 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.upload-section p {
+    color: var(--muted-color);
+    margin-bottom: 20px;
+}
+
+.file-input {
+    display: none;
+}
+
+.upload-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+.upload-btn:hover {
+    background: var(--primary-hover);
+}
+
+/* Мета информация */
+.wiki-meta {
+    color: var(--muted-color);
+    font-size: 14px;
+    margin: 10px 0;
+    padding: 10px;
+    background: var(--light-bg);
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+.no-wiki {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted-color);
+}
+
+/* Заголовок wiki */
+.wiki-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.wiki-title {
+    color: var(--text-color);
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.back-btn {
+    margin-right: 15px;
+}
+
+/* Стили для кнопок */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background-color: transparent;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+}
+
+.btn-outline-secondary {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+/* Исправления для текста */
+.wiki-card h1, .wiki-card h2, .wiki-card h3, .wiki-card h4, .wiki-card h5, .wiki-card h6 {
+    color: var(--text-color);
+    margin: 0 0 15px 0;
+    line-height: 1.3;
+}
+
+.wiki-card p {
+    color: var(--text-color);
+    margin: 0 0 15px 0;
+    line-height: 1.6;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .wiki-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .image-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+    }
+    
+    .btn-group .btn {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    
+    .wiki-title {
+        font-size: 1.5rem;
+    }
+}
