@@ -12,10 +12,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.ERROR)
 
 # Async Database Engine configuration
-#DATABASE_URL = f"postgresql+asyncpg://{config.database_user}:{config.database_password}@{config.database_host}/{config.database_name}"
-DATABASE_URL = f"sqlite+aiosqlite:///fanbase.db"
 engine = create_async_engine(
-    DATABASE_URL,
+    url=config.database_url,
     echo=config.debug_mode,
     #future=True,
     #pool_pre_ping=True,

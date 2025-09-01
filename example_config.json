@@ -1,10 +1,6 @@
 {
   "app_port": 8080,
   "admin_password": "admin_hash_sha3_512",
-  "database_host": "127.0.0.1",
-  "database_user": "postgres",
-  "database_password": "123456789",
-  "database_name": "fanbase",
-  "database_port": "5432",
+  "database_url": "sqlite+aiosqlite:///fanbase.db", // or postgresql+asyncpg://{user}:{password}@{host}:{port}/{database}
   "debug_mode": false
 }

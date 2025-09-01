@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>fanbase {% block title %}{% endblock %}</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/icons.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-people-fill"></i>
+                Fanbase
+                {% block navbar_title %}{% endblock %}
+            </a>
+            
+            {% block search_bar %}{% endblock %}
+
+            <div class="navbar-text">
+                {% block navbar_actions %}{% endblock %}
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

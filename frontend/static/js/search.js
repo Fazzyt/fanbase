@@ -1,21 +1,21 @@
 function searchFunction() {
-    const input = document.getElementById('search').value.toLowerCase();
-    const people = document.querySelectorAll('.people');
-    const cards = document.querySelectorAll('.card');
-    const quotes = document.querySelectorAll('.quotes');
-    const quotesCards = document.querySelectorAll('.quotes_card');
+    const input = document.getElementById('search');
+    if (!input) return;
+    const filter = input.value.trim().toLowerCase();
 
-    // Фильтрация людей
-    people.forEach((person, index) => {
-        const name = person.textContent.toLowerCase();
-        const card = cards[index];
-        card.style.display = name.includes(input) || input === '' ? '' : 'none';
+    // Фильтрация карточек людей (index.html)
+    document.querySelectorAll('.people').forEach(person => {
+        const card = person.closest('.card');
+        if (!card) return;
+        const name = person.textContent.trim().toLowerCase();
+        card.style.display = (filter === '' || name.includes(filter)) ? '' : 'none';
     });
 
-    // Фильтрация цитат
-    quotes.forEach((quote, index) => {
-        const text = quote.textContent.toLowerCase();
-        const quoteCard = quotesCards[index];
-        quoteCard.style.display = text.includes(input) || input === '' ? '' : 'none';
+    // Фильтрация карточек цитат (person.html)
+    document.querySelectorAll('.quotes').forEach(quote => {
+        const quoteCard = quote.closest('.quotes_card');
+        if (!quoteCard) return;
+        const text = quote.textContent.trim().toLowerCase();
+        quoteCard.style.display = (filter === '' || text.includes(filter)) ? '' : 'none';
     });
 }

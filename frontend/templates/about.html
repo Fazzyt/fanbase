@@ -1,76 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <title>fanbase - о нас</title>
+{% block title %}о нас{% endblock %}
 
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/icons.css') }}">
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/about.css') }}">
-    </head>
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
 
-    <body>
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="about_container">
+                <h1>О сайте:</h1>
 
-        <nav class="navbar">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">
-                    <i class="bi bi-people-fill"></i>
-                    Fanbase
-                </a>
+                <p>
+                    Fanbase — это веб-сайт, предназначенный для сбора и каталогизации цитат от преподавателей, 
+                    профессоров, лекторов и других авторитетных фигур в образовательной сфере. 
+                    Целью проекта является создание архива мудрых высказываний, 
+                    вдохновляющих историй и полезных советов, которые могут быть использованы студентами, 
+                    преподавателями и всеми, кто интересуется образованием.
+                </p>
             </div>
-            
-        </nav>
-        
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="about_container">
-                        <h1>О сайте:</h1>
-
-                        <p>
-                            Fanbase — это веб-сайт, предназначенный для сбора и каталогизации цитат от преподавателей, 
-                            профессоров, лекторов и других авторитетных фигур в образовательной сфере. 
-                            Целью проекта является создание архива мудрых высказываний, 
-                            вдохновляющих историй и полезных советов, которые могут быть использованы студентами, 
-                            преподавателями и всеми, кто интересуется образованием.
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="about_container">
-                        <h1>Проект:</h1>
-                        <p>
-                            <i class="bi bi-code-slash"></i>
-                            Коддеры: 
-                            <a href="https://fazzyt.github.io/">@fazzyt</a>, 
-                            <a href="https://github.com/NullPointerExceptionOwO">@NullPointerExceptionOwO</a>
-                        </p>
-                        <p>
-                            <i class="bi bi-file-earmark-text"></i>
-                            API:
-                            <a href="https://github.com/Fazzyt/fanbase/blob/main/api.md">API</a>
-                        </p>
-                        <p>
-                            <i class="bi bi-archive"></i>
-                            Исходники: 
-                                <a href="https://github.com/Fazzyt/fanbase">
-                                    <i class="bi bi-github"></i> link
-                                </a>
-                        </p>
-                        <p>
-                            <i class="bi bi-c-circle-fill"></i>
-                            2024 <span>fazzyt</span> All rights reserved.
-                        </p>
-                    </div>
-                </div>
-            </div>  
         </div>
-
-        <script src="{{ url_for('static',filename='js/theme.js') }}"></script>
-
-    </body>
-
-</html>
+        <div class="col-md-12">
+            <div class="about_container">
+                <h1>Проект:</h1>
+                <p>
+                    <i class="bi bi-code-slash"></i>
+                    Коддеры: 
+                    <a href="https://fazzyt.github.io/">@fazzyt</a>, 
+                    <a href="https://github.com/NullPointerExceptionOwO">@NullPointerExceptionOwO</a>
+                </p>
+                <p>
+                    <i class="bi bi-file-earmark-text"></i>
+                    API:
+                    <a href="https://github.com/Fazzyt/fanbase/blob/main/api.md"><i class="bi bi-link"></i> link</a>
+                </p>
+                <p>
+                    <i class="bi bi-archive"></i>
+                    Исходники: 
+                        <a href="https://github.com/Fazzyt/fanbase">
+                            <i class="bi bi-github"></i> link
+                        </a>
+                </p>
+            </div>
+        </div>
+    </div>  
+</div>
+{% endblock %}

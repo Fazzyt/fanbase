@@ -1,125 +1,108 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <title>fanbase</title>
+{% block title %}{% endblock %}
 
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/bootstrap.css') }}">
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/icons.css') }}">
-        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/index.css') }}">
-    </head>
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
 
-    <body>
+{% block search_bar %}
+<input 
+    type="text"
+    class="search" 
+    id="search" 
+    placeholder="Найти..." 
+    onkeyup="searchFunction()">
+{% endblock %}
 
-        <nav class="navbar">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/">
-                    <i class="bi bi-people-fill"></i>
-                    Fanbase
-                </a>
+{% block navbar_actions %}
+<button class="btn btn-primary" id="theme-toggle">
+    <i class="bi bi-moon"></i>
+</button>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_person">
+    <i class="bi bi-chat-left-text"></i>
+    Сделать цитируемого
+</button>
+{% endblock %}
 
-                <input 
-                    type="text"
-                    class="search" 
-                    id="search" 
-                    placeholder="Найти..." 
-                    onkeyup="searchFunction()">
-
-                <div class="navbar-text">
-                    <button class="btn btn-primary" id="theme-toggle">
-                        <i class="bi bi-moon"></i>
-                    </button>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create_person">
-                        <i class="bi bi-chat-left-text"></i>
-                        Сделать цитируемого
-                    </button>
-                </div>
-            </div>
-            
-        </nav>
-
-        <div class="modal fade" id="create_person" tabindex="-1" aria-labelledby="create_personLabel" aria-hidden="true">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="create_personLabel">Создание цитируемого</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <form action="/" method="post">
-                    <div class="modal-body">
-                        <label for="full_name">ФИО цитируемого:</label>
-                        <input
-                            type="text"
-                            name="full_name" 
-                            id="full_name" 
-                            class="form-control"
-                            required>
-                    </div>
-
-                    <div class="modal-footer">
-                        <input type="submit" value="Создать" class="btn btn-primary">
-                    </div>
-                </form>
-              </div>
-            </div>
-          </div>
-
-
-        <div class="container">
-            <div class="row">
-                {% for person in person_list %}
-                    <div class="col-md-8">
-                        <div class="card">
-                            <h3 class="people">{{ person.full_name|e }}</h3>
-                            <p class="text-start">
-                                <span><i class="bi bi-chat-right-quote"></i></span> 
-                                <b>Всего цитат: <span>{{ person.quote_count }}</span></b>
-                            </p>
-                            <div class="card-actions">
-                                <a href="/{{person.full_name}}" class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-chat-right-quote"></i> Цитаты
-                                </a>
-                                <a href="/wiki/{{person.full_name}}" class="btn btn-outline-primary btn-sm">
-                                    <i class="bi bi-book"></i> Wiki
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>  
+{% block content %}
+<div class="modal fade" id="create_person" tabindex="-1" aria-labelledby="create_personLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="create_personLabel">Создание цитируемого</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <footer class="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7">
-                        <h1>
-                            <i class="bi bi-info-circle"></i>
-                            О нас:
-                        </h1>
-                        <p>
-                            Fanbase — сайт для цитат и советов от образовательных авторитетов.
-                        </p>
-                        <i class="bi bi-briefcase"></i>
-                        Узнать больше: <a href="/about">Ссылка</a>
-                    </div>
-                    <div class="col-md-3"></div>
-                    <div class="col-md-2">
-                        <h1>Copyright:</h1>
-                        <p>&copy;fanbase 2024</p>
+        <form action="/" method="post">
+            <div class="modal-body">
+                <label for="full_name">ФИО цитируемого:</label>
+                <input
+                    type="text"
+                    name="full_name" 
+                    id="full_name" 
+                    class="form-control"
+                    required>
+            </div>
+
+            <div class="modal-footer">
+                <input type="submit" value="Создать" class="btn btn-primary">
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+    <div class="row">
+        {% for person in person_list %}
+            <div class="col-md-8">
+                <div class="card">
+                    <h3 class="people">{{ person.full_name|e }}</h3>
+                    <p class="text-start">
+                        <span><i class="bi bi-chat-right-quote"></i></span> 
+                        <b>Всего цитат: <span>{{ person.quote_count }}</span></b>
+                    </p>
+                    <div class="card-actions">
+                        <a href="/{{person.full_name}}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-chat-right-quote"></i> Цитаты
+                        </a>
+                        <a href="/wiki/{{person.full_name}}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-book"></i> Wiki
+                        </a>
                     </div>
                 </div>
             </div>
-        </footer>
+        {% endfor %}
+    </div>  
+</div>
+{% endblock %}
 
-        <script src="{{ url_for('static', filename='js/search.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+{% block footer %}
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <h1>
+                    <i class="bi bi-info-circle"></i>
+                    О нас:
+                </h1>
+                <p>
+                    Fanbase — сайт для цитат и советов от образовательных авторитетов.
+                </p>
+                <i class="bi bi-briefcase"></i>
+                Узнать больше: <a href="/about">Ссылка</a>
+            </div>
+            <div class="col-md-3"></div>
+            <div class="col-md-2">
+                <h1>Copyright:</h1>
+                <p>&copy;Fanbase 2025</p>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endblock %}
 
-    </body>
-</html>
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/search.js') }}"></script>
+{% endblock %}

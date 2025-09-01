@@ -11,12 +11,7 @@ class Config:
     app_port: int
     admin_password: str
 
-    database_host: str
-    database_user: str
-    database_password: str
-    database_name: str
-
-    database_port: int = 5432
+    database_url: str
     debug_mode: bool = False
 
     def __init__(self, config_file_path="config.json") -> None:
